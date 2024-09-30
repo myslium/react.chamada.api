@@ -7,7 +7,8 @@ export default function Navegacao() {
     return (
         <BrowserRouter>
             <Routes>
-                <Route path='/vaga' element={<Cadastrarvaga />} />
+                <Route path='/' element={<Cadastrarvaga />} />
+                <Route path='/:id' element={<Cadastrarvaga />} />
                 <Route path='/vagasDisponiveis' element={<Consultar />} />
 
             </Routes>

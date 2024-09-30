@@ -2,7 +2,7 @@ import { useState } from 'react'
 import './index.scss'
 
 import axios from 'axios'
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
 export default function Cadastrarvaga() {
     const [nome, setnome] = useState('');
@@ -17,6 +17,8 @@ export default function Cadastrarvaga() {
     const [requisitos, setrequisitos] = useState('');
     const [descricao, setdescricao] = useState('');
     const [datacriacao, setdatacriacao] = useState('');
+
+    const {id} = useParams()
 
     async function salvar() {
         const paramCorpo = {
@@ -34,16 +36,28 @@ export default function Cadastrarvaga() {
             "datacriacao": datacriacao
         }
 
-        const url = 'http://localhost:5010/vagas';
-        let resp = await axios.post(url, paramCorpo);
+        if(id===undefined){
+            const url = 'http://localhost:5010/vagas';
+            let resp = await axios.post(url, paramCorpo);
+    
+            alert('Vaga adicionada na lista vagas. Id: ' + resp.data.novoId);
 
-        alert('Vaga adicionada na lista negra. Id: ' + resp.data.novoId);
+        }
+        else{
+            const url = `http://localhost:5010/vagas/${id}`;
+            let resp = await axios.put(url, paramCorpo);
+    
+            alert('Vaga alterada na lista vagas' );
+        }
+
+       
     }
 
 
     return (
         <div className='pagina-cadastrar'>
             <h1> VAGAS </h1>
+            <p>{id}</p>
 
 
             <div className='form'>

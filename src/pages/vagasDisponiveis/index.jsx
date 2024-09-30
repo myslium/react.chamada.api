@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import './index.scss'
 
 import axios from 'axios'
@@ -11,16 +11,21 @@ export default function Consultar() {
 
 
     async function buscar() {
+        
         const url = 'http://localhost:5010/vagas';
         let resp = await axios.get(url);
         setVagas(resp.data)
     }
+    useEffect(()=>{
+        buscar()
+    },[])
 
+   
 
 
     return (
         <div className='pagina-consultar'>
-            <Link to = '/vaga'><h1>Voltar para vaga</h1></Link>
+            <Link to = '/'><h1>Voltar para vaga</h1></Link>
             <h1> CONSULTAR </h1>
 
             <button onClick={buscar}>Buscar</button>
@@ -41,6 +46,8 @@ export default function Consultar() {
                         <th>Requisitos</th>
                         <th>Descricao</th>
                         <th>Data</th>
+                        <th></th>
+
 
 
                     </tr>
@@ -62,6 +69,8 @@ export default function Consultar() {
                             <td>{item.requisicoes}</td>
                             <td>{item.descricao}</td>
                             <td>{new Date(item.datacriacao).toLocaleDateString()}</td>
+                            <Link to= {`/${item.id}`}> <td>Alterar </td></Link>   
+
 
                         </tr>
                     )}
